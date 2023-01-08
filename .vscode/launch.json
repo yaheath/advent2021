@@ -1,0 +1,461 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'advent'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "advent",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day01'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day01",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day01",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day01.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day02'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day02",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day02",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day02.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day03'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day03",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day03",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day03.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day04'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day04",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day04",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day04.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day05'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day05",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day05",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day05.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day06'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day06",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day06",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day06.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day07'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day07",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day07",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day07.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day08'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day08",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day08",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day08.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day09'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day09",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day09",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day09.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day10'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day10",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day10",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day10.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day11'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day11",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day11",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day11.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day12'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day12",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day12",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day12.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug tests 'day12'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day12",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day12",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day13'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day13",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day13",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day13.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day14'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day14",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day14",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day14.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day15'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day15",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day15",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day15.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day16'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day16",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day16",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day16.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day17'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day17",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day17",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day17.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day19'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day19",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day19",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day19.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day20'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day20",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day20",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day20.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day21'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day21",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day21",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day21.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day22'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day22",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day22",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day22.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day23'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day23",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day23",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day23.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day24'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day24",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day24",
+                    "kind": "bin"
+                }
+            },
+            "args": ["day24.input"],
+            "cwd": "${workspaceFolder}"
+        }
+
+    ]
+}
