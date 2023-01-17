@@ -142,7 +142,6 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
     use super::*;
 
     #[test]

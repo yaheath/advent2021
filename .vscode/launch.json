@@ -406,6 +406,25 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Debug tests 'day19'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day19",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day19",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug executable 'day20'",
             "cargo": {
                 "args": [
@@ -473,6 +492,25 @@
                 }
             },
             "args": ["day23.input"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug tests 'day23'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day23",
+                    "--package=advent2021"
+                ],
+                "filter": {
+                    "name": "day23",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
             "cwd": "${workspaceFolder}"
         },
         {

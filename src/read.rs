@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, Lines, Stdin, StdinLock};
+use std::iter;
 use std::iter::Iterator;
 use std::str::FromStr;
 use std::vec::Vec;
@@ -56,6 +57,13 @@ pub fn input_from_iter<T: FromStr, I: Iterator<Item=String>>(line_iter: I) -> Ve
         }
     }
     data
+}
+
+pub fn input_as_string() -> String {
+    input_lines()
+        .chain(iter::once("".into()))
+        .collect::<Vec<String>>()
+        .join("\n")
 }
 
 pub fn test_input<T: FromStr>(data: &str) -> Vec<T> {

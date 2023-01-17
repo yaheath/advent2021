@@ -144,8 +144,8 @@ impl<T: Copy> Grid<T> {
         None
     }
 
-    pub fn for_each<F>(&self, callback: F)
-            where F: Fn(T, i64, i64) {
+    pub fn for_each<F>(&self, mut callback: F)
+            where F: FnMut(T, i64, i64) {
         for y in self.min_y .. self.min_y + self.y_size as i64 {
             for x in self.min_x .. self.min_x + self.x_size as i64 {
                 callback(self.get(x, y), x, y);
