@@ -1,7 +1,6 @@
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_grouped_input;
-use advent2021::infinite_grid::InfiniteGrid;
+use advent_lib::read::read_grouped_input;
+use advent_lib::infinite_grid::InfiniteGrid;
 
 #[derive(Clone, Copy)]
 enum Pixel {
@@ -81,7 +80,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::grouped_test_input;
+    use advent_lib::read::grouped_test_input;
     use super::*;
 
     #[test]

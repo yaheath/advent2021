@@ -2,9 +2,8 @@ use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::iter;
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_input;
-use advent2021::grid::Grid;
+use advent_lib::read::read_input;
+use advent_lib::grid::Grid;
 
 #[derive(Clone, Copy)]
 enum Cell {
@@ -102,8 +101,7 @@ fn make_map(input: &Vec<String>) -> Map {
     let ppt = rooms[0].len();
     let idx_to_type: Vec<Pod> = Vec::from_iter(
         [Pod::A, Pod::B, Pod::C, Pod::D].iter()
-        .map(|p| iter::repeat(*p).take(ppt))
-        .flatten()
+        .flat_map(|p| iter::repeat(*p).take(ppt))
     );
     Map {
         cells,
@@ -275,7 +273,7 @@ fn path_to(idx: usize, dest: Coord, state: &StateExtra, map: &Map) -> Option<Sta
 fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item=State> + 'a {
     map.idx_to_type.iter()
         .enumerate()
-        .map(move |(idx, p)| {
+        .flat_map(move |(idx, p)| {
             let (x, y) = state.pods[idx];
             let moveto = match map.rules.get(x, y) {
                 Rule::Room(rm) => {
@@ -327,7 +325,6 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
                 .map(|s| s.unwrap())
                 .collect::<Vec<State>>()
         })
-        .flatten()
 }
 
 fn search(map: &Map) -> usize {
@@ -381,7 +378,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

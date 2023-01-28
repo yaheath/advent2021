@@ -4,8 +4,7 @@ use std::rc::Rc;
 use std::str::FromStr;
 use std::vec::Vec;
 use itertools::Itertools;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 #[derive(Clone, Debug)]
 struct Node(Rc<RefCell<Element>>);
@@ -286,8 +285,7 @@ fn part2(input: &Vec<SFNum>) -> u64 {
     input
         .iter()
         .tuple_combinations()
-        .map(|(a, b)| vec![a.add(b), b.add(a)])
-        .flatten()
+        .flat_map(|(a, b)| vec![a.add(b), b.add(a)])
         .map(|x| x.magnitude())
         .max()
         .unwrap()
@@ -301,7 +299,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

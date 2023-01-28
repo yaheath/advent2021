@@ -1,8 +1,7 @@
 use std::ops::RangeInclusive;
 use std::str::FromStr;
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 #[derive(Clone)]
 struct Region {
@@ -171,7 +170,7 @@ impl Region {
 
 fn add_region(space: Vec<Region>, new: Region) -> Vec<Region> {
     let mut ret:Vec<Region> =
-        space.iter().map(|s| s.split(&new)).flatten().collect();
+        space.iter().flat_map(|s| s.split(&new)).collect();
     ret.push(new);
     ret
 }
@@ -218,7 +217,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

@@ -2,10 +2,9 @@
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
-extern crate advent2021;
-use advent2021::read::read_input;
-use advent2021::infinite_grid::InfiniteGrid;
-use advent2021::range::BidirRangeInclusive;
+use advent_lib::read::read_input;
+use advent_lib::infinite_grid::InfiniteGrid;
+use advent_lib::range::BidirRangeInclusive;
 
 struct Line {
     x1: i64,
@@ -84,7 +83,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

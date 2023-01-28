@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_grouped_input;
+extern crate advent_lib;
+use advent_lib::read::read_grouped_input;
 
 enum Input {
     Draws(Vec<u32>),
@@ -157,7 +157,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::grouped_test_input;
+    use advent_lib::read::grouped_test_input;
     use super::*;
 
     #[test]

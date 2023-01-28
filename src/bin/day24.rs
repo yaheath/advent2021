@@ -2,8 +2,8 @@ use itertools::chain;
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::{max, min};
-extern crate advent2021;
-use advent2021::read::input_as_string;
+extern crate advent_lib;
+use advent_lib::read::input_as_string;
 
 #[derive(Debug, Clone)]
 struct Instruction {

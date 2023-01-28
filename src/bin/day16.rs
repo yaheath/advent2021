@@ -1,8 +1,7 @@
 #[macro_use] extern crate lazy_static;
 use std::collections::HashMap;
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 lazy_static! {
     static ref HEX2BIN: HashMap<char, &'static str> = [
@@ -41,8 +40,7 @@ struct Packet {
 fn bitstream<'a>(hex: &'a String) -> impl Iterator<Item=char> + 'a {
     hex
         .chars()
-        .map(|c| HEX2BIN[&c].chars())
-        .flatten()
+        .flat_map(|c| HEX2BIN[&c].chars())
 }
 
 fn get_bits_to_int(n: usize, bitstream: &mut dyn Iterator<Item=char>) -> u64 {

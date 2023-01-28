@@ -1,7 +1,6 @@
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::grid::Grid;
-use advent2021::read::read_input;
+use advent_lib::grid::Grid;
+use advent_lib::read::read_input;
 
 fn mkgrid(input: &Vec<String>) -> Grid<u8> {
     Grid::from_input(input, 0, 0, |c| match c {
@@ -79,7 +78,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

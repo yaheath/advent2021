@@ -2,8 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
 use std::vec::Vec;
 use itertools::Itertools;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 struct Edge {
     a: String,
@@ -94,8 +93,7 @@ fn part2(caves: &HashMap<String, Cave>) -> usize {
     caves
         .iter()
         .filter(|(k,v)| !v.is_large && *k != "start" && *k != "end")
-        .map(|(k,_)| traverse(&"start".into(), caves, &visited, Some(k.clone())))
-        .flatten()
+        .flat_map(|(k,_)| traverse(&"start".into(), caves, &visited, Some(k.clone())))
         .unique()
         .count()
 }
@@ -109,7 +107,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

@@ -1,7 +1,6 @@
 use std::vec::Vec;
 use itertools::Itertools;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 fn part1(input: &Vec<i32>) -> usize {
     input
@@ -27,7 +26,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

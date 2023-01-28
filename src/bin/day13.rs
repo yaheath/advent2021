@@ -2,40 +2,51 @@
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
-extern crate advent2021;
-use advent2021::read::read_input;
-use advent2021::infinite_grid::InfiniteGrid;
+use advent_lib::read::read_sectioned_input;
+use advent_lib::infinite_grid::InfiniteGrid;
 
-enum Input {
-    Coord(i64,i64),
-    XFold(i64),
-    YFold(i64),
-    Blank,
+#[derive(Clone)]
+struct Coord {
+    x: i64,
+    y: i64,
 }
 
-impl FromStr for Input {
+#[derive(Copy, Clone)]
+enum Fold {
+    X(i64),
+    Y(i64),
+}
+
+impl FromStr for Coord {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         lazy_static! {
-            static ref CRE: Regex = Regex::new(r"(\d+),(\d+)").unwrap();
+            static ref RE: Regex = Regex::new(r"(\d+),(\d+)").unwrap();
         }
+        if let Some(caps) = RE.captures(s) {
+            Ok(Coord{
+                x: caps.get(1).unwrap().as_str().parse::<i64>().unwrap(),
+                y: caps.get(2).unwrap().as_str().parse::<i64>().unwrap(),
+            })
+        }
+        else {
+            Err(())
+        }
+    }
+}
+
+impl FromStr for Fold {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         lazy_static! {
-            static ref FRE: Regex = Regex::new(r"([xy])=(\d+)").unwrap();
+            static ref RE: Regex = Regex::new(r"([xy])=(\d+)").unwrap();
         }
-        if s == "" {
-            Ok(Input::Blank)
-        } else if let Some(caps) = CRE.captures(s) {
-            Ok(Input::Coord(
-                caps.get(1).unwrap().as_str().parse::<i64>().unwrap(),
-                caps.get(2).unwrap().as_str().parse::<i64>().unwrap(),
-            ))
-        }
-        else if let Some(caps) = FRE.captures(s) {
+        if let Some(caps) = RE.captures(s) {
             let v = caps.get(2).unwrap().as_str().parse::<i64>().unwrap();
             if caps.get(1).unwrap().as_str() == "x" {
-                Ok(Input::XFold(v))
+                Ok(Fold::X(v))
             } else {
-                Ok(Input::YFold(v))
+                Ok(Fold::Y(v))
             }
         }
         else {
@@ -44,21 +55,13 @@ impl FromStr for Input {
     }
 }
 
-enum Fold {
-    X(i64),
-    Y(i64),
-}
+type Input = (Vec<Coord>, Vec<Fold>);
 
-fn setup(input: &Vec<Input>) -> (InfiniteGrid<bool>, Vec<Fold>) {
+fn setup(input: &Input) -> (InfiniteGrid<bool>, Vec<Fold>) {
     let mut grid = InfiniteGrid::new(false);
-    let mut folds = Vec::new();
-    for i in input {
-        match i {
-            Input::Coord(x, y) => {grid.set(*x, *y, true);},
-            Input::XFold(v) => {folds.push(Fold::X(*v));},
-            Input::YFold(v) => {folds.push(Fold::Y(*v));},
-            Input::Blank => {},
-        }
+    let folds = input.1.clone();
+    for c in input.0.iter() {
+        grid.set(c.x, c.y, true);
     }
     (grid, folds)
 }
@@ -87,14 +90,14 @@ fn fold(grid: &InfiniteGrid<bool>, fold: &Fold) -> InfiniteGrid<bool> {
     newgrid
 }
 
-fn part1(input: &Vec<Input>) -> usize {
+fn part1(input: &Input) -> usize {
     let (grid, folds) = setup(&input);
     let grid = fold(&grid, &folds[0]);
     //grid.print(|c| if c { '#' } else { '.' });
     grid.iter().filter(|(_,c)| **c).count()
 }
 
-fn part2(input: &Vec<Input>) {
+fn part2(input: &Input) {
     let (grid, folds) = setup(&input);
     let mut nextgrid = grid;
     for f in folds {
@@ -105,19 +108,19 @@ fn part2(input: &Vec<Input>) {
 }
 
 fn main() {
-    let input: Vec<Input> = read_input();
+    let input: Input = read_sectioned_input();
     println!("Part 1: {}", part1(&input));
     part2(&input);
 }
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::sectioned_test_input;
     use super::*;
 
     #[test]
     fn day13_test() {
-        let input: Vec<Input> = test_input(include_str!("day13.testinput"));
+        let input: Input = sectioned_test_input(include_str!("day13.testinput"));
         assert_eq!(part1(&input), 17);
     }
 }

@@ -1,8 +1,7 @@
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::vec::Vec;
-extern crate advent2021;
-use advent2021::read::read_input;
+use advent_lib::read::read_input;
 
 struct Input(i64);
 
@@ -154,7 +153,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::test_input;
+    use advent_lib::read::test_input;
     use super::*;
 
     #[test]

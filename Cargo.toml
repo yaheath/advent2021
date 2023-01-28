@@ -10,6 +10,6 @@ edition = "2021"
 regex = "*"
 lazy_static = "*"
 itertools = "*"
-num = "*"
+advent_lib = { version = "0.1.0", path = "../advent_lib" }
 #derivative = "*"
 #json = "*"

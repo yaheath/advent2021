@@ -2,8 +2,7 @@ use std::collections::{HashMap,HashSet};
 use std::str::FromStr;
 use std::vec::Vec;
 use itertools::Itertools;
-extern crate advent2021;
-use advent2021::read::read_grouped_input;
+use advent_lib::read::read_grouped_input;
 
 type Coord = (i64,i64,i64);
 enum Input {
@@ -57,8 +56,7 @@ impl Scanner {
         let relative_beacons = beacons
             .iter()
             .tuple_combinations()
-            .map(|(a,b)| [ (a.0-b.0,a.1-b.1,a.2-b.2), (b.0-a.0,b.1-a.1,b.2-a.2) ])
-            .flatten()
+            .flat_map(|(a,b)| [ (a.0-b.0,a.1-b.1,a.2-b.2), (b.0-a.0,b.1-a.1,b.2-a.2) ])
             .collect();
 
         Self {
@@ -160,8 +158,8 @@ fn construct_space(scanners: &Vec<Scanner>) -> Vec<Scanner> {
             .tuple_combinations()
             .map(|(s1,s2)| (s1, s2, s1.match_beacons(s2)))
             .filter(|(_,_,m)| m.is_some())
-            .map(|(s1,s2,_)| [(s1.id, s2.id), (s2.id, s1.id)] )
-            .flatten() {
+            .flat_map(|(s1,s2,_)| [(s1.id, s2.id), (s2.id, s1.id)] )
+    {
         matched.entry(s1)
             .and_modify(|v| v.push(s2))
             .or_insert(vec![s2]);
@@ -196,8 +194,7 @@ fn construct_space(scanners: &Vec<Scanner>) -> Vec<Scanner> {
 fn part1(scanners: &Vec<Scanner>) -> usize {
     let set: HashSet<_> = scanners
         .iter()
-        .map(|s| s.beacons.iter())
-        .flatten()
+        .flat_map(|s| s.beacons.iter())
         .collect();
     set.len()
 }
@@ -221,7 +218,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent2021::read::grouped_test_input;
+    use advent_lib::read::grouped_test_input;
     use super::*;
 
     #[test]
