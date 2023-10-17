@@ -2,7 +2,6 @@ use itertools::chain;
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::{max, min};
-extern crate advent_lib;
 use advent_lib::read::input_as_string;
 
 #[derive(Debug, Clone)]

@@ -1,6 +1,5 @@
 use std::str::FromStr;
 use std::vec::Vec;
-extern crate advent_lib;
 use advent_lib::read::read_grouped_input;
 
 enum Input {
