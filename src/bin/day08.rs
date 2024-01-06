@@ -60,8 +60,8 @@ impl FromStr for Disp {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut itr1 = s.split(" | ");
-        let patterns = itr1.next().unwrap().split(' ').map(|d| SSeg::new(d)).collect();
-        let displays = itr1.next().unwrap().split(' ').map(|d| SSeg::new(d)).collect();
+        let patterns = itr1.next().unwrap().split(' ').map(SSeg::new).collect();
+        let displays = itr1.next().unwrap().split(' ').map(SSeg::new).collect();
         Ok (
             Disp {
                 patterns,
@@ -97,15 +97,13 @@ impl Disp {
             .cloned().collect();
 
         let nine = unknowns
-            .iter()
-            .filter(|p| p.segs.is_superset(&abcdf))
-            .next()
+            .iter().find(|p| p.segs.is_superset(&abcdf))
             .unwrap()
             .clone();
 
         digmap.insert(9, nine.clone());
         unknowns.remove(&nine);
-        let gseg = nine.segs.difference(&abcdf).next().unwrap().clone();
+        let gseg = *nine.segs.difference(&abcdf).next().unwrap();
 
         // the only digits which have ACFG (that isn't 8 or 9) are 0 and 3
         let mut acfg = digmap[&7].segs.clone();
@@ -127,13 +125,11 @@ impl Disp {
         unknowns.remove(&zero_or_three[1]);
 
         let be_segs:HashSet<Seg> = digmap[&0].segs.difference(&acfg).cloned().collect();   // B and E segs
-        let eseg = be_segs.difference(&digmap[&4].segs).next().unwrap().clone();
+        let eseg = *be_segs.difference(&digmap[&4].segs).next().unwrap();
 
         // 6 is the only remaining unknown that has B and E
         let six = unknowns
-            .iter()
-            .filter(|p| p.segs.is_superset(&be_segs))
-            .next()
+            .iter().find(|p| p.segs.is_superset(&be_segs))
             .unwrap()
             .clone();
 
@@ -142,9 +138,7 @@ impl Disp {
 
         // 2 is the only remaining unknown to have E
         let two = unknowns
-            .iter()
-            .filter(|p| p.segs.contains(&eseg))
-            .next()
+            .iter().find(|p| p.segs.contains(&eseg))
             .unwrap()
             .clone();
         digmap.insert(2, two.clone());

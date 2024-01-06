@@ -16,7 +16,7 @@ fn setup(input: &[Vec<String>]) -> (InfiniteGrid<Pixel>, Vec<Pixel>) {
     (grid, enh_map)
 }
 
-fn step(grid: &InfiniteGrid<Pixel>, enh_map: &Vec<Pixel>, iter_num: usize) -> InfiniteGrid<Pixel> {
+fn step(grid: &InfiniteGrid<Pixel>, enh_map: &[Pixel], iter_num: usize) -> InfiniteGrid<Pixel> {
     let xb = grid.x_bounds();
     let yb = grid.y_bounds();
     let unknown_flip = matches!(enh_map[0], Pixel::Light);
@@ -52,15 +52,15 @@ fn printgrid(grid: &InfiniteGrid<Pixel>) {
     });
 }
 
-fn part1(grid: &InfiniteGrid<Pixel>, enh_map: &Vec<Pixel>) -> usize {
-    let grid = step(&grid, enh_map, 0);
+fn part1(grid: &InfiniteGrid<Pixel>, enh_map: &[Pixel]) -> usize {
+    let grid = step(grid, enh_map, 0);
     let grid = step(&grid, enh_map, 1);
     grid.iter()
         .filter(|(_,c)| matches!(c, Pixel::Light))
         .count()
 }
 
-fn part2(grid: &InfiniteGrid<Pixel>, enh_map: &Vec<Pixel>) -> usize {
+fn part2(grid: &InfiniteGrid<Pixel>, enh_map: &[Pixel]) -> usize {
     let mut grid = grid.clone();
     for n in 0..50 {
         grid = step(&grid, enh_map, n);

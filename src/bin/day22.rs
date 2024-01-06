@@ -156,12 +156,7 @@ impl Region {
         ret
     }
     fn intersection(&self, other: &Rect3D) -> Option<Region> {
-        if let Some(common) = self.rect.intersection(other) {
-            Some(Region { on: self.on, rect: common })
-        }
-        else {
-            None
-        }
+        self.rect.intersection(other).map(|common| Region { on: self.on, rect: common })
     }
 }
 

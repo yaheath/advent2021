@@ -91,14 +91,14 @@ fn fold(grid: &InfiniteGrid<bool>, fold: &Fold) -> InfiniteGrid<bool> {
 }
 
 fn part1(input: &Input) -> usize {
-    let (grid, folds) = setup(&input);
+    let (grid, folds) = setup(input);
     let grid = fold(&grid, &folds[0]);
     //grid.print(|c| if c { '#' } else { '.' });
     grid.iter().filter(|(_,c)| **c).count()
 }
 
 fn part2(input: &Input) {
-    let (grid, folds) = setup(&input);
+    let (grid, folds) = setup(input);
     let mut nextgrid = grid;
     for f in folds {
         nextgrid = fold(&nextgrid, &f);

@@ -21,10 +21,10 @@ impl LineError {
     }
 }
 
-fn analyze_line(line: &String) -> LineError {
+fn analyze_line(line: &str) -> LineError {
     let mut stack: Vec<char> = Vec::new();
     for c in line.chars() {
-        let top = if stack.len() == 0 { ' ' } else { stack[stack.len() - 1] };
+        let top = if stack.is_empty() { ' ' } else { stack[stack.len() - 1] };
         match c {
             '<' => { stack.push('>'); },
             '[' => { stack.push(']'); },
@@ -66,7 +66,7 @@ fn score_missing(s: &str) -> usize {
 fn part1(input: &[String]) -> usize {
     input
         .iter()
-        .map(|l| analyze_line(l))
+        .map(|s| analyze_line(s))
         .filter(|opt| opt.corrupt().is_some())
         .map(|opt| score_corrupt(opt.corrupt().unwrap()))
         .sum()
@@ -75,7 +75,7 @@ fn part1(input: &[String]) -> usize {
 fn part2(input: &[String]) -> usize {
     let mut scores: Vec<usize> = input
         .iter()
-        .map(|l| analyze_line(l))
+        .map(|s| analyze_line(s))
         .filter(|opt| opt.missing().is_some())
         .map(|opt| score_missing(opt.missing().unwrap()))
         .collect();

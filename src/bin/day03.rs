@@ -23,27 +23,19 @@ fn part1(input: &[String]) -> usize {
 
     let gamma_bin: String = onecounts
         .iter()
-        .map(|b|
-            if *b > halfrows {
-                '1'
-            } else if *b < halfrows {
-                '0'
-            } else {
-                panic!()
-            }
-        )
+        .map(|b| match *b {
+            n if n > halfrows => '1',
+            n if n < halfrows => '0',
+            _ => panic!(),
+        })
         .collect();
     let epsilon_bin: String = onecounts
         .iter()
-        .map(|b|
-            if *b > halfrows {
-                '0'
-            } else if *b < halfrows {
-                '1'
-            } else {
-                panic!()
-            }
-        )
+        .map(|b| match *b {
+            n if n > halfrows => '0',
+            n if n < halfrows => '1',
+            _ => panic!(),
+        })
         .collect();
     usize::from_str_radix(&gamma_bin, 2).unwrap() *
         usize::from_str_radix(&epsilon_bin, 2).unwrap()
@@ -57,14 +49,8 @@ fn get_rating(input: &[String], o2: bool) -> String {
         let half = list.len() / 2 + list.len() % 2;
         let match_char = if o2 {
             if counts[idx] >= half { b'1' } else { b'0' }
-        } else {
-            if counts[idx] < half { b'1' } else { b'0' }
-        };
-        list = list
-            .iter()
-            .filter(|row| row.as_bytes()[idx] == match_char)
-            .cloned()
-            .collect();
+        } else if counts[idx] < half { b'1' } else { b'0' };
+        list.retain(|row| row.as_bytes()[idx] == match_char);
         if list.len() == 1 {
             return list[0].clone();
         }

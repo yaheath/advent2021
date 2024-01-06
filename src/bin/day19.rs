@@ -84,9 +84,7 @@ impl Scanner {
                 break;
             }
         }
-        if found_rot.is_none() {
-            return None;
-        }
+        found_rot?;
         let rotation = found_rot.unwrap();
         let other_beacons:Vec<Coord> = other.beacons
             .iter()

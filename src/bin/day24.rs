@@ -61,7 +61,7 @@ fn parse(input: &str) -> Vec<Instruction> {
 // case to make this satisfiable.
 //
 // My solution assumes that every push operation has a matching pop operation. This means a push
-// could be followed by a pop, two pushes could be folioed by two pops, and so on. The recurse
+// could be followed by a pop, two pushes could be followed by two pops, and so on. The recurse
 // function will match pushes to pops, processing any nested operations, and the remaining,
 // following operations as appropriate
 //
@@ -136,8 +136,8 @@ fn recurse(
     )
 }
 
-fn doit(instructions: &Vec<Instruction>, part: u8) -> usize {
-    let (instructions, ans) = recurse(&instructions[..], part);
+fn doit(instructions: &[Instruction], part: u8) -> usize {
+    let (instructions, ans) = recurse(instructions, part);
     assert!(instructions.is_empty());
 
     ans

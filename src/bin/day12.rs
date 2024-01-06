@@ -30,10 +30,7 @@ impl Cave {
         let mut neighbors = HashSet::new();
         neighbors.insert(neighbor.to_owned());
         Self {
-            is_large: match name.chars().next().unwrap() {
-                'A'..='Z' => true,
-                _ => false,
-            },
+            is_large: name.chars().next().unwrap().is_ascii_uppercase(),
             neighbors,
         }
     }
@@ -57,7 +54,7 @@ fn traverse(current: &str, caves: &HashMap<String, Cave>, visited: &HashSet<Stri
         return vec!["end".into()];
     }
     let mut visited = visited.clone();
-    let mut repeat = repeat.clone();
+    let mut repeat = repeat;
     match repeat {
         Some(r) => {
             if r == current {
@@ -75,7 +72,7 @@ fn traverse(current: &str, caves: &HashMap<String, Cave>, visited: &HashSet<Stri
     for n in &cave.neighbors {
         let neighbor = &caves[n];
         if neighbor.is_large || !visited.contains(n) {
-            for p in traverse(&n, caves, &visited, repeat.clone()) {
+            for p in traverse(n, caves, &visited, repeat) {
                 paths.push(format!("{current},{}", p));
             }
         }
@@ -93,7 +90,7 @@ fn part2(caves: &HashMap<String, Cave>) -> usize {
     caves
         .iter()
         .filter(|(k,v)| !v.is_large && *k != "start" && *k != "end")
-        .flat_map(|(k,_)| traverse("start", caves, &visited, Some(&k)))
+        .flat_map(|(k,_)| traverse("start", caves, &visited, Some(k)))
         .unique()
         .count()
 }

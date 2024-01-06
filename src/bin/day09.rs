@@ -59,7 +59,7 @@ fn part2(grid: &Grid<i32>) -> i32 {
     find_low_points(grid)
         .into_iter()
         .map(|(x, y)| find_basin_size(grid, x, y))
-        .map(|s| Reverse(s))
+        .map(Reverse)
         .k_smallest(3)
         .map(|s| s.0)
         .product()

@@ -37,11 +37,11 @@ fn sim_scalable(input: &[u8], iterations: usize) -> usize {
 }
 
 fn part1(input: &[u8]) -> usize {
-    sim_scalable(&input, 80)
+    sim_scalable(input, 80)
 }
 
 fn part2(input: &[u8]) -> usize {
-    sim_scalable(&input, 256)
+    sim_scalable(input, 256)
 }
 
 fn main() {

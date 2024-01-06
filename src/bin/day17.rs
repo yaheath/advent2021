@@ -60,7 +60,11 @@ fn sim_shot(x_vel: i64, y_vel: i64, target: &TargetArea) -> ShotResult {
         }
         x_pos += x_vel;
         y_pos += y_vel;
-        x_vel += if x_vel < 0 { 1 } else if x_vel > 0 { -1 } else { 0 };
+        x_vel += match x_vel {
+            ..=-1 => 1,
+            0 => 0,
+            1.. => -1,
+        };
         y_vel -= 1;
         max_y = max_y.max(y_pos);
     }
@@ -100,14 +104,11 @@ fn find_all_hits(target: &TargetArea) -> (i64, usize) {
                 if target.x.contains(&x) && target.y.contains(&y) {
                     direct_hit = true;
                 }
-                match sim_shot(x, y, target) {
-                    ShotResult::Hit(hgt) => {
-                        needhit = false;
-                        nohits = false;
-                        max_y = max_y.max(hgt);
-                        n_hits += 1;
-                    },
-                    _ => {},
+                if let ShotResult::Hit(hgt) = sim_shot(x, y, target) {
+                    needhit = false;
+                    nohits = false;
+                    max_y = max_y.max(hgt);
+                    n_hits += 1;
                 }
             });
         if nohits && !needhit && direct_hit {

@@ -183,7 +183,7 @@ fn traverse_explode(node: &Node, depth: usize, left_num: &RefCell<Option<Node>>,
         *(left_num.borrow_mut()) = Some(node.clone());
     }
 
-    return TResult::NoChange;
+    TResult::NoChange
 }
 
 fn traverse_split(node: &Node) -> TResult {
@@ -224,7 +224,7 @@ fn traverse_split(node: &Node) -> TResult {
             return TResult::Reduced;
         };
     }
-    return TResult::NoChange;
+    TResult::NoChange
 }
 
 fn magnitude(node: &Node) -> u64 {
@@ -309,12 +309,10 @@ mod tests {
         let sfnum = SFNum::from_str("[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]").unwrap();
         assert_eq!(format!("{sfnum}"), "[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]");
 
-        for (from, to) in vec![
-            ("[[[[[9,8],1],2],3],4]", "[[[[0,9],2],3],4]"),
+        for (from, to) in [("[[[[[9,8],1],2],3],4]", "[[[[0,9],2],3],4]"),
             ("[7,[6,[5,[4,[3,2]]]]]", "[7,[6,[5,[7,0]]]]"),
             ("[[6,[5,[4,[3,2]]]],1]", "[[6,[5,[7,0]]],3]"),
-            ("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]", "[[3,[2,[8,0]]],[9,[5,[7,0]]]]")
-        ] {
+            ("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]", "[[3,[2,[8,0]]],[9,[5,[7,0]]]]")] {
             let mut sfnum = SFNum::from_str(from).unwrap();
             sfnum.reduce();
             assert_eq!(format!("{sfnum}"), to);
@@ -325,8 +323,7 @@ mod tests {
         sfnum1 = sfnum1.add(&sfnum2);
         assert_eq!(format!("{sfnum1}"), "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]");
 
-        let sumtest = vec![
-            "[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]]",
+        let sumtest = ["[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]]",
             "[7,[[[3,7],[4,3]],[[6,3],[8,8]]]]",
             "[[2,[[0,8],[3,4]]],[[[6,7],1],[7,[1,6]]]]",
             "[[[[2,4],7],[6,[0,5]]],[[[6,8],[2,8]],[[2,1],[4,5]]]]",
@@ -335,8 +332,7 @@ mod tests {
             "[2,9]",
             "[1,[[[9,3],9],[[9,0],[0,7]]]]",
             "[[[5,[7,4]],7],1]",
-            "[[[[4,2],2],6],[8,7]]",
-        ];
+            "[[[[4,2],2],6],[8,7]]"];
         let mut sfnum = SFNum::from_str(sumtest[0]).unwrap();
         for s in sumtest.iter().skip(1) {
             let n = SFNum::from_str(s).unwrap();

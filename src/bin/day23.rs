@@ -201,7 +201,7 @@ fn get_initial_state(map: &Map) -> State {
     }
 }
 
-fn is_final(coords: &Vec<Coord>, map: &Map) -> bool {
+fn is_final(coords: &[Coord], map: &Map) -> bool {
     map.idx_to_type.iter()
         .enumerate()
         .filter(|(idx, p)| map.rules.get(coords[*idx].0, coords[*idx].1) == Rule::Room(**p))
@@ -320,9 +320,7 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
                 Move::ToHall => map.halls.clone(),
             };
             dests.iter()
-                .map(|d| path_to(idx, *d, &state, map))
-                .filter(|s| s.is_some())
-                .map(|s| s.unwrap())
+                .filter_map(|d| path_to(idx, *d, state, map))
                 .collect::<Vec<State>>()
         })
 }

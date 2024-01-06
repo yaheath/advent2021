@@ -14,7 +14,7 @@ enum Input {
 impl FromStr for Input {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "" {
+        if s.is_empty() {
             Ok(Input::Blank)
         } else if s.contains(" -> ") {
             let mut itr = s.split(" -> ");

@@ -6,7 +6,7 @@ use advent_lib::read::read_input;
 
 fn mkgrid(input: &[String]) -> Grid<u8> {
     Grid::from_input(&input.to_owned(), 0, 0, |c| match c {
-        '0'..='9' => (c as u8 - b'0') as u8,
+        '0'..='9' => c as u8 - b'0',
         _ => panic!(),
     })
 }
