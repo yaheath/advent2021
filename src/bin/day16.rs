@@ -37,7 +37,7 @@ struct Packet {
     payload: Payload,
 }
 
-fn bitstream<'a>(hex: &'a String) -> impl Iterator<Item=char> + 'a {
+fn bitstream<'a>(hex: &'a str) -> impl Iterator<Item=char> + 'a {
     hex
         .chars()
         .flat_map(|c| HEX2BIN[&c].chars())
@@ -120,13 +120,13 @@ fn value_of(pkt: &Box<Packet>) -> u64 {
     }
 }
 
-fn part1(input: &Vec<String>) -> u64 {
+fn part1(input: &[String]) -> u64 {
     let mut bitstream = bitstream(&input[0]);
     let pkt = parse_packet(&mut bitstream);
     sum_versions(pkt)
 }
 
-fn part2(input: &Vec<String>) -> u64 {
+fn part2(input: &[String]) -> u64 {
     let mut bitstream = bitstream(&input[0]);
     let pkt = parse_packet(&mut bitstream);
     value_of(&pkt)

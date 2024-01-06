@@ -9,7 +9,7 @@ enum Pixel {
     Untouched,
 }
 
-fn setup(input: &Vec<Vec<String>>) -> (InfiniteGrid<Pixel>, Vec<Pixel>) {
+fn setup(input: &[Vec<String>]) -> (InfiniteGrid<Pixel>, Vec<Pixel>) {
     let mapfunc = |c| match c { '.' => Pixel::Dark, '#' => Pixel::Light, _ => panic!() };
     let enh_map = input[0][0].chars().map(mapfunc).collect();
     let grid = InfiniteGrid::from_input(&input[1], Pixel::Untouched, |c,_,_| Some(mapfunc(c)));

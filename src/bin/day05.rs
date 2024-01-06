@@ -39,7 +39,7 @@ impl Line {
     }
 }
 
-fn doit(input: &Vec<Line>, with_diagonals: bool) -> usize {
+fn doit(input: &[Line], with_diagonals: bool) -> usize {
     let mut grid: InfiniteGrid<u32> = InfiniteGrid::new(0);
     input
         .iter()
@@ -67,11 +67,11 @@ fn doit(input: &Vec<Line>, with_diagonals: bool) -> usize {
     grid.iter().filter(|(_,v)| **v > 1).count()
 }
 
-fn part1(input: &Vec<Line>) -> usize {
+fn part1(input: &[Line]) -> usize {
     doit(input, false)
 }
 
-fn part2(input: &Vec<Line>) -> usize {
+fn part2(input: &[Line]) -> usize {
     doit(input, true)
 }
 

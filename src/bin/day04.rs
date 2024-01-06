@@ -38,7 +38,7 @@ struct Board {
 }
 
 impl Board {
-    fn new(input: &Vec<Input>) -> Self {
+    fn new(input: &[Input]) -> Self {
         let mut arr: [u32; 25] = [0; 25];
         let input: Vec<&Vec<u32>> = input
             .iter()
@@ -106,7 +106,7 @@ impl Board {
     }
 }
 
-fn split_input(input: &Vec<Vec<Input>>) -> (Vec<u32>, Vec<Board>) {
+fn split_input(input: &[Vec<Input>]) -> (Vec<u32>, Vec<Board>) {
     if let Input::Draws(draws) = &(input[0])[0] {
         let boards: Vec<Board> = input
             .iter()
@@ -120,7 +120,7 @@ fn split_input(input: &Vec<Vec<Input>>) -> (Vec<u32>, Vec<Board>) {
     }
 }
 
-fn part1(input: &Vec<Vec<Input>>) -> u32 {
+fn part1(input: &[Vec<Input>]) -> u32 {
     let (draws, mut boards) = split_input(input);
     for m in draws {
         for b in &mut boards {
@@ -132,7 +132,7 @@ fn part1(input: &Vec<Vec<Input>>) -> u32 {
     panic!();
 }
 
-fn part2(input: &Vec<Vec<Input>>) -> u32 {
+fn part2(input: &[Vec<Input>]) -> u32 {
     let (draws, mut boards) = split_input(input);
     let mut last = 0u32;
     for m in draws {

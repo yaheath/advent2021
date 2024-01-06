@@ -44,8 +44,8 @@ struct Map {
     idx_to_type: Vec<Pod>,
 }
 
-fn make_map(input: &Vec<String>) -> Map {
-    let cells = Grid::from_input(&input, Cell::Wall, 0, |c| match c {
+fn make_map(input: &[String]) -> Map {
+    let cells = Grid::from_input(&input.to_owned(), Cell::Wall, 0, |c| match c {
         '#' => Cell::Wall,
         '.' => Cell::Space,
         'A' => Cell::Pod(Pod::A),
@@ -349,7 +349,7 @@ fn search(map: &Map) -> usize {
     panic!("no solution found");
 }
 
-fn part1(input: &Vec<String>) -> usize {
+fn part1(input: &[String]) -> usize {
     let map = make_map(input);
     /*
     print_grid(&map.cells);
@@ -359,7 +359,7 @@ fn part1(input: &Vec<String>) -> usize {
     search(&map)
 }
 
-fn part2(input: &Vec<String>) -> usize {
+fn part2(input: &[String]) -> usize {
     let map = make_map(input);
     search(&map)
 }

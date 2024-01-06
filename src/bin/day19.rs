@@ -137,7 +137,7 @@ impl Scanner {
     }
 }
 
-fn setup(input: &Vec<Vec<Input>>) -> Vec<Scanner> {
+fn setup(input: &[Vec<Input>]) -> Vec<Scanner> {
     input
         .iter()
         .map(|group| group
@@ -191,7 +191,7 @@ fn construct_space(scanners: &Vec<Scanner>) -> Vec<Scanner> {
     out
 }
 
-fn part1(scanners: &Vec<Scanner>) -> usize {
+fn part1(scanners: &[Scanner]) -> usize {
     let set: HashSet<_> = scanners
         .iter()
         .flat_map(|s| s.beacons.iter())
@@ -199,7 +199,7 @@ fn part1(scanners: &Vec<Scanner>) -> usize {
     set.len()
 }
 
-fn part2(scanners: &Vec<Scanner>) -> i64 {
+fn part2(scanners: &[Scanner]) -> i64 {
     scanners
         .iter()
         .tuple_combinations()

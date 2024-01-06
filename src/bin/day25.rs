@@ -10,8 +10,8 @@ enum Cell {
     Empty
 }
 
-fn mkgrid(input: &Vec<String>) -> Grid<Cell> {
-    Grid::from_input(input, Cell::Empty, 0, |c| match c {
+fn mkgrid(input: &[String]) -> Grid<Cell> {
+    Grid::from_input(&input.to_owned(), Cell::Empty, 0, |c| match c {
         'v' => Cell::Down,
         '>' => Cell::Left,
         '.' => Cell::Empty,

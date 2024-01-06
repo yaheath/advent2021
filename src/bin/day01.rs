@@ -2,14 +2,14 @@ use std::vec::Vec;
 use itertools::Itertools;
 use advent_lib::read::read_input;
 
-fn part1(input: &Vec<i32>) -> usize {
+fn part1(input: &[i32]) -> usize {
     input
         .windows(2)
         .filter(|slice| slice[1] > slice[0])
         .count()
 }
 
-fn part2(input: &Vec<i32>) -> usize {
+fn part2(input: &[i32]) -> usize {
     input
         .windows(3)
         .map(|slice| slice.iter().sum::<i32>())

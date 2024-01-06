@@ -273,7 +273,7 @@ impl fmt::Display for SFNum {
     }
 }
 
-fn part1(input: &Vec<SFNum>) -> u64 {
+fn part1(input: &[SFNum]) -> u64 {
     let mut sum = input[0].clone();
     for row in input.iter().skip(1) {
         sum = sum.add(row);
@@ -281,7 +281,7 @@ fn part1(input: &Vec<SFNum>) -> u64 {
     sum.magnitude()
 }
 
-fn part2(input: &Vec<SFNum>) -> u64 {
+fn part2(input: &[SFNum]) -> u64 {
     input
         .iter()
         .tuple_combinations()

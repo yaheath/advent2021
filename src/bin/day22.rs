@@ -82,12 +82,10 @@ impl Intersection for Rect3D {
 impl Region {
     fn split(&self, other: &Region) -> Vec<Region> {
         let mut ret = Vec::new();
-        let common = self.rect.intersection(&other.rect);
-        if common.is_none() {
+        let Some(common) = self.rect.intersection(&other.rect) else {
             ret.push(self.clone());
             return ret;
-        }
-        let common = common.unwrap();
+        };
         if common == self.rect {
             // other completely encapsulates self
             // so we return an empty vec
@@ -183,16 +181,14 @@ fn build_space(regions: &mut dyn Iterator<Item=Region>) -> Vec<Region> {
     space
 }
 
-fn part1(input: &Vec<Region>) -> Volume {
+fn part1(input: &[Region]) -> Volume {
     let bounds = Rect3D {
         x_range: -50..=50,
         y_range: -50..=50,
         z_range: -50..=50,
     };
     let mut itr = input.iter()
-        .map(|r| r.intersection(&bounds))
-        .filter(|r| r.is_some())
-        .map(|r| r.unwrap());
+        .filter_map(|r| r.intersection(&bounds));
     let space = build_space(&mut itr);
     space.iter()
         .filter(|s| s.on)
@@ -200,7 +196,7 @@ fn part1(input: &Vec<Region>) -> Volume {
         .sum()
 }
 
-fn part2(input: &Vec<Region>) -> Volume {
+fn part2(input: &[Region]) -> Volume {
     let mut itr = input.iter().cloned();
     let space = build_space(&mut itr);
     space.iter()

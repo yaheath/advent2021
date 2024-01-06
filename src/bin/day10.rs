@@ -52,7 +52,7 @@ fn score_corrupt(c: char) -> usize {
     }
 }
 
-fn score_missing(s: &String) -> usize {
+fn score_missing(s: &str) -> usize {
     s.chars()
         .fold(0, |acc, c| acc * 5 + match c {
             ')' => 1,
@@ -63,7 +63,7 @@ fn score_missing(s: &String) -> usize {
         })
 }
 
-fn part1(input: &Vec<String>) -> usize {
+fn part1(input: &[String]) -> usize {
     input
         .iter()
         .map(|l| analyze_line(l))
@@ -72,7 +72,7 @@ fn part1(input: &Vec<String>) -> usize {
         .sum()
 }
 
-fn part2(input: &Vec<String>) -> usize {
+fn part2(input: &[String]) -> usize {
     let mut scores: Vec<usize> = input
         .iter()
         .map(|l| analyze_line(l))

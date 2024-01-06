@@ -2,7 +2,7 @@ use std::vec::Vec;
 extern crate advent_lib;
 use advent_lib::read::read_input;
 
-fn count_ones(list: &Vec<String>) -> Vec<usize> {
+fn count_ones(list: &[String]) -> Vec<usize> {
     let nbits = list[0].len();
     list
         .iter()
@@ -17,7 +17,7 @@ fn count_ones(list: &Vec<String>) -> Vec<usize> {
         })
 }
 
-fn part1(input: &Vec<String>) -> usize {
+fn part1(input: &[String]) -> usize {
     let halfrows = input.len() / 2;
     let onecounts = count_ones(input);
 
@@ -49,9 +49,9 @@ fn part1(input: &Vec<String>) -> usize {
         usize::from_str_radix(&epsilon_bin, 2).unwrap()
 }
 
-fn get_rating(input: &Vec<String>, o2: bool) -> String {
+fn get_rating(input: &[String], o2: bool) -> String {
     let nbits = input[0].len();
-    let mut list = input.clone();
+    let mut list = input.to_owned();
     for idx in 0..nbits {
         let counts = count_ones(&list);
         let half = list.len() / 2 + list.len() % 2;
@@ -72,7 +72,7 @@ fn get_rating(input: &Vec<String>, o2: bool) -> String {
     panic!();
 }
 
-fn part2(input: &Vec<String>) -> usize {
+fn part2(input: &[String]) -> usize {
     let o2_str = get_rating(input, true);
     let co2_str = get_rating(input, false);
     usize::from_str_radix(&o2_str, 2).unwrap() *

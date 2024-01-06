@@ -26,9 +26,9 @@ struct Cave {
 }
 
 impl Cave {
-    fn new(name: &String, neighbor: &String) -> Self {
+    fn new(name: &str, neighbor: &str) -> Self {
         let mut neighbors = HashSet::new();
-        neighbors.insert(neighbor.clone());
+        neighbors.insert(neighbor.to_owned());
         Self {
             is_large: match name.chars().next().unwrap() {
                 'A'..='Z' => true,
@@ -39,7 +39,7 @@ impl Cave {
     }
 }
 
-fn mkcaves(input: &Vec<Edge>) -> HashMap<String, Cave> {
+fn mkcaves(input: &[Edge]) -> HashMap<String, Cave> {
     let mut caves: HashMap<String, Cave> = HashMap::new();
     for edge in input {
         caves.entry(edge.a.clone())
@@ -52,22 +52,22 @@ fn mkcaves(input: &Vec<Edge>) -> HashMap<String, Cave> {
     caves
 }
 
-fn traverse(current: &String, caves: &HashMap<String, Cave>, visited: &HashSet<String>, repeat: Option<String>) -> Vec<String> {
+fn traverse(current: &str, caves: &HashMap<String, Cave>, visited: &HashSet<String>, repeat: Option<&str>) -> Vec<String> {
     if current == "end" {
         return vec!["end".into()];
     }
     let mut visited = visited.clone();
     let mut repeat = repeat.clone();
-    match repeat.clone() {
+    match repeat {
         Some(r) => {
-            if r == *current {
+            if r == current {
                 repeat = None;
             } else {
-                visited.insert(current.clone());
+                visited.insert(current.to_owned());
             }
         }
         None => {
-            visited.insert(current.clone());
+            visited.insert(current.to_owned());
         }
     }
     let cave = &caves[current];
@@ -85,7 +85,7 @@ fn traverse(current: &String, caves: &HashMap<String, Cave>, visited: &HashSet<S
 
 fn part1(caves: &HashMap<String, Cave>) -> usize {
     let visited: HashSet<String> = HashSet::new();
-    traverse(&"start".into(), caves, &visited, None).len()
+    traverse("start", caves, &visited, None).len()
 }
 
 fn part2(caves: &HashMap<String, Cave>) -> usize {
@@ -93,7 +93,7 @@ fn part2(caves: &HashMap<String, Cave>) -> usize {
     caves
         .iter()
         .filter(|(k,v)| !v.is_large && *k != "start" && *k != "end")
-        .flat_map(|(k,_)| traverse(&"start".into(), caves, &visited, Some(k.clone())))
+        .flat_map(|(k,_)| traverse("start", caves, &visited, Some(&k)))
         .unique()
         .count()
 }

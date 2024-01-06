@@ -32,7 +32,7 @@ impl FromStr for Input {
     }
 }
 
-fn setup(input: &Vec<Input>) -> (String, HashMap<(char, char), char>) {
+fn setup(input: &[Input]) -> (String, HashMap<(char, char), char>) {
     let mut template = String::new();
     let mut rules = HashMap::new();
     for i in input {
@@ -45,7 +45,7 @@ fn setup(input: &Vec<Input>) -> (String, HashMap<(char, char), char>) {
     (template, rules)
 }
 
-fn run(input: &Vec<Input>, iters: i64) -> i64 {
+fn run(input: &[Input], iters: i64) -> i64 {
     let (template, rules) = setup(input);
     let mut pairs: HashMap<(char, char), i64> = HashMap::new();
     let mut histogram: HashMap<char, i64> = HashMap::new();
@@ -98,11 +98,11 @@ fn run(input: &Vec<Input>, iters: i64) -> i64 {
     }
 }
 
-fn part1(input: &Vec<Input>) -> i64 {
+fn part1(input: &[Input]) -> i64 {
     run(input, 10)
 }
 
-fn part2(input: &Vec<Input>) -> i64 {
+fn part2(input: &[Input]) -> i64 {
     run(input, 40)
 }
 

@@ -164,7 +164,7 @@ impl Disp {
     }
 }
 
-fn part1(input: &Vec<Disp>) -> usize {
+fn part1(input: &[Disp]) -> usize {
     input
         .iter()
         .map(|row| row.displays
@@ -175,7 +175,7 @@ fn part1(input: &Vec<Disp>) -> usize {
         .sum()
 }
 
-fn part2(input: &Vec<Disp>) -> usize {
+fn part2(input: &[Disp]) -> usize {
     let list: Vec<usize> = input
         .iter()
         .map(|row| row.solve())

@@ -19,7 +19,7 @@ fn sim(input: &Vec<u8>, iterations: usize) -> usize {
 }
 */
 
-fn sim_scalable(input: &Vec<u8>, iterations: usize) -> usize {
+fn sim_scalable(input: &[u8], iterations: usize) -> usize {
     let mut fish_by_phase: [usize; 7] = [0; 7];
     let mut pending_by_phase: [usize; 7] = [0; 7];
 
@@ -36,11 +36,11 @@ fn sim_scalable(input: &Vec<u8>, iterations: usize) -> usize {
     fish_by_phase.iter().sum::<usize>() + pending_by_phase.iter().sum::<usize>()
 }
 
-fn part1(input: &Vec<u8>) -> usize {
+fn part1(input: &[u8]) -> usize {
     sim_scalable(&input, 80)
 }
 
-fn part2(input: &Vec<u8>) -> usize {
+fn part2(input: &[u8]) -> usize {
     sim_scalable(&input, 256)
 }
 

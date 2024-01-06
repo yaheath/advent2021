@@ -42,7 +42,7 @@ fn run_deterministic_game(p1_initial_pos: Pos, p2_initial_pos: Pos) -> i64 {
     rolls * p1_score.min(p2_score)
 }
 
-fn part1(input: &Vec<Input>) -> i64 {
+fn part1(input: &[Input]) -> i64 {
     run_deterministic_game(input[0].0, input[1].0)
 }
 
@@ -141,7 +141,7 @@ fn run_dirac_game(p1_initial_pos: Pos, p2_initial_pos: Pos) -> usize {
     p1_wins.max(p2_wins)
 }
 
-fn part2(input: &Vec<Input>) -> usize {
+fn part2(input: &[Input]) -> usize {
     run_dirac_game(input[0].0, input[1].0)
 }
 

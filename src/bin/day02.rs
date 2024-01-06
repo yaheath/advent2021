@@ -31,7 +31,7 @@ impl FromStr for Command {
     }
 }
 
-fn part1(input: &Vec<Command>) -> i32 {
+fn part1(input: &[Command]) -> i32 {
     let (depth, horiz) = input
         .iter()
         .fold((0, 0), |(depth, horiz), cmd| {
@@ -45,7 +45,7 @@ fn part1(input: &Vec<Command>) -> i32 {
     depth * horiz
 }
 
-fn part2(input: &Vec<Command>) -> i32 {
+fn part2(input: &[Command]) -> i32 {
     let (depth, horiz, _) = input
         .iter()
         .fold((0, 0, 0), |(depth, horiz, aim), cmd| {

@@ -1,7 +1,7 @@
 use std::vec::Vec;
 use advent_lib::read::read_input;
 
-fn part1(input: &Vec<i32>) -> i32 {
+fn part1(input: &[i32]) -> i32 {
     let minval = *input.iter().min().unwrap();
     let maxval = *input.iter().max().unwrap();
     let mut minfuel = i32::MAX;
@@ -15,7 +15,7 @@ fn part1(input: &Vec<i32>) -> i32 {
     minfuel
 }
 
-fn part2(input: &Vec<i32>) -> i32 {
+fn part2(input: &[i32]) -> i32 {
     let minval = *input.iter().min().unwrap();
     let maxval = *input.iter().max().unwrap();
     let mut minfuel = i32::MAX;
