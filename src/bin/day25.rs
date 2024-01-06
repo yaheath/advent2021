@@ -1,7 +1,7 @@
 use std::mem;
 use std::vec::Vec;
-use advent_lib::grid::Grid;
-use advent_lib::read::read_input;
+use ya_advent_lib::grid::Grid;
+use ya_advent_lib::read::read_input;
 
 #[derive(Clone, Copy, Eq, PartialEq)]
 enum Cell {
@@ -9,25 +9,24 @@ enum Cell {
     Down,
     Empty
 }
-
-fn mkgrid(input: &[String]) -> Grid<Cell> {
-    Grid::from_input(&input.to_owned(), Cell::Empty, 0, |c| match c {
-        'v' => Cell::Down,
-        '>' => Cell::Left,
-        '.' => Cell::Empty,
-        _ => panic!(),
-    })
+impl From<char> for Cell {
+    fn from(c: char) -> Self {
+        match c {
+            'v' => Cell::Down,
+            '>' => Cell::Left,
+            '.' => Cell::Empty,
+            _ => panic!(),
+        }
+    }
 }
-
-#[allow(dead_code)]
-fn printgrid(grid: &Grid<Cell>) {
-    grid.print(|c| {
+impl From<Cell> for char {
+    fn from(c: Cell) -> Self {
         match c {
             Cell::Down => 'v',
             Cell::Left => '>',
             Cell::Empty => '.',
         }
-    });
+    }
 }
 
 fn step(grid: &mut Grid<Cell>) -> bool {
@@ -74,8 +73,8 @@ fn part1(start_grid: &Grid<Cell>) -> usize {
             return i;
         }
         /*
-        printgrid(&grid);
-        println!("");
+        grid.print();
+        println!();
         */
     }
     panic!();
@@ -83,20 +82,20 @@ fn part1(start_grid: &Grid<Cell>) -> usize {
 
 fn main() {
     let input: Vec<String> = read_input();
-    let grid = mkgrid(&input);
+    let grid = Grid::from_input(&input, Cell::Empty, 0);
 
     println!("Part 1: {}", part1(&grid));
 }
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]
     fn day25_test() {
         let input: Vec<String> = test_input(include_str!("day25.testinput"));
-        let grid = mkgrid(&input);
+        let grid = Grid::from_input(&input, Cell::Empty, 0);
         assert_eq!(part1(&grid), 58);
     }
 }

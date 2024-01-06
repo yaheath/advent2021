@@ -2,7 +2,7 @@ use itertools::chain;
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::{max, min};
-use advent_lib::read::input_as_string;
+use ya_advent_lib::read::input_as_string;
 
 #[derive(Debug, Clone)]
 struct Instruction {

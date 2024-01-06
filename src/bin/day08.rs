@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 use std::str::FromStr;
 use std::vec::Vec;
-use advent_lib::read::read_input;
+use ya_advent_lib::read::read_input;
 
 #[derive(Copy,Clone,Eq,PartialEq,Hash)]
 enum Seg {
@@ -185,7 +185,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

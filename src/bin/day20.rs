@@ -1,6 +1,6 @@
 use std::vec::Vec;
-use advent_lib::read::read_grouped_input;
-use advent_lib::infinite_grid::InfiniteGrid;
+use ya_advent_lib::read::read_grouped_input;
+use ya_advent_lib::infinite_grid::InfiniteGrid;
 
 #[derive(Clone, Copy)]
 enum Pixel {
@@ -80,7 +80,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::grouped_test_input;
+    use ya_advent_lib::read::grouped_test_input;
     use super::*;
 
     #[test]

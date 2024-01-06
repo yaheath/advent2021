@@ -2,14 +2,39 @@ use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::iter;
 use std::vec::Vec;
-use advent_lib::read::read_input;
-use advent_lib::grid::Grid;
+use ya_advent_lib::read::read_input;
+use ya_advent_lib::grid::Grid;
 
 #[derive(Clone, Copy)]
 enum Cell {
     Wall,
     Space,
     Pod(Pod),
+}
+impl From<char> for Cell {
+    fn from(c: char) -> Self {
+        match c {
+            '#' => Cell::Wall,
+            '.' => Cell::Space,
+            'A' => Cell::Pod(Pod::A),
+            'B' => Cell::Pod(Pod::B),
+            'C' => Cell::Pod(Pod::C),
+            'D' => Cell::Pod(Pod::D),
+            _   => Cell::Wall,
+        }
+    }
+}
+impl From<Cell> for char {
+    fn from(c: Cell) -> Self {
+        match c {
+            Cell::Wall => '#',
+            Cell::Space => '.',
+            Cell::Pod(Pod::A) => 'A',
+            Cell::Pod(Pod::B) => 'B',
+            Cell::Pod(Pod::C) => 'C',
+            Cell::Pod(Pod::D) => 'D',
+        }
+    }
 }
 
 #[derive(Clone, Copy, Eq, PartialEq)]
@@ -23,6 +48,20 @@ enum Rule {
     Entry,
     Room(Pod),
     Wall,
+}
+
+impl From<Rule> for char {
+    fn from(r: Rule) -> Self {
+        match r {
+            Rule::Wall => '#',
+            Rule::Hall => '.',
+            Rule::Entry => '-',
+            Rule::Room(Pod::A) => 'A',
+            Rule::Room(Pod::B) => 'B',
+            Rule::Room(Pod::C) => 'C',
+            Rule::Room(Pod::D) => 'D',
+        }
+    }
 }
 
 impl Pod {
@@ -45,15 +84,7 @@ struct Map {
 }
 
 fn make_map(input: &[String]) -> Map {
-    let cells = Grid::from_input(&input.to_owned(), Cell::Wall, 0, |c| match c {
-        '#' => Cell::Wall,
-        '.' => Cell::Space,
-        'A' => Cell::Pod(Pod::A),
-        'B' => Cell::Pod(Pod::B),
-        'C' => Cell::Pod(Pod::C),
-        'D' => Cell::Pod(Pod::D),
-        _   => Cell::Wall,
-    });
+    let cells = Grid::from_input(input, Cell::Wall, 0);
     let mut rules: Grid<Rule> = Grid::new(
         cells.x_bounds().start, cells.y_bounds().start,
         cells.x_bounds().end - 1, cells.y_bounds().end - 1,
@@ -111,31 +142,6 @@ fn make_map(input: &[String]) -> Map {
         //ppt,
         idx_to_type,
     }
-}
-
-#[allow(dead_code)]
-fn print_grid(grid: &Grid<Cell>) {
-    grid.print(|c| match c {
-        Cell::Wall => '#',
-        Cell::Space => '.',
-        Cell::Pod(Pod::A) => 'A',
-        Cell::Pod(Pod::B) => 'B',
-        Cell::Pod(Pod::C) => 'C',
-        Cell::Pod(Pod::D) => 'D',
-    });
-}
-
-#[allow(dead_code)]
-fn print_rule(grid: &Grid<Rule>) {
-    grid.print(|c| match c {
-        Rule::Wall => '#',
-        Rule::Hall => '.',
-        Rule::Entry => '-',
-        Rule::Room(Pod::A) => 'A',
-        Rule::Room(Pod::B) => 'B',
-        Rule::Room(Pod::C) => 'C',
-        Rule::Room(Pod::D) => 'D',
-    });
 }
 
 type Coord = (i64, i64);
@@ -350,9 +356,9 @@ fn search(map: &Map) -> usize {
 fn part1(input: &[String]) -> usize {
     let map = make_map(input);
     /*
-    print_grid(&map.cells);
-    println!("");
-    print_rule(&map.rules);
+    map.cells.print();
+    println!();
+    map.rules.print();
     */
     search(&map)
 }
@@ -376,7 +382,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

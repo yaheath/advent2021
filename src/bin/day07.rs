@@ -1,5 +1,5 @@
 use std::vec::Vec;
-use advent_lib::read::read_input;
+use ya_advent_lib::read::read_input;
 
 fn part1(input: &[i32]) -> i32 {
     let minval = *input.iter().min().unwrap();
@@ -41,7 +41,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

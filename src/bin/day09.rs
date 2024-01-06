@@ -2,11 +2,11 @@ use std::cmp::Reverse;
 use std::collections::{HashSet, VecDeque};
 use std::vec::Vec;
 use itertools::Itertools;
-use advent_lib::grid::Grid;
-use advent_lib::read::read_input;
+use ya_advent_lib::grid::Grid;
+use ya_advent_lib::read::read_input;
 
-fn mkgrid(input: &Vec<String>) -> Grid<i32> {
-    Grid::from_input(input, 9, 1, |c| match c {
+fn mkgrid(input: &[String]) -> Grid<i32> {
+    Grid::from_input_map(input, 9, 1, |c| match c {
         '0'..='9' => (c as u8 - b'0') as i32,
         _ => panic!(),
     })
@@ -75,7 +75,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

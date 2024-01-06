@@ -1,6 +1,6 @@
 use std::str::FromStr;
 use std::vec::Vec;
-use advent_lib::read::read_grouped_input;
+use ya_advent_lib::read::read_grouped_input;
 
 enum Input {
     Draws(Vec<u32>),
@@ -156,7 +156,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::grouped_test_input;
+    use ya_advent_lib::read::grouped_test_input;
     use super::*;
 
     #[test]

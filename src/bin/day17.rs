@@ -3,7 +3,7 @@ use std::ops::Range;
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
-use advent_lib::read::read_input;
+use ya_advent_lib::read::read_input;
 
 struct TargetArea {
     x: Range<i64>,
@@ -128,7 +128,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

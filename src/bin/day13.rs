@@ -2,8 +2,8 @@
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
-use advent_lib::read::read_sectioned_input;
-use advent_lib::infinite_grid::InfiniteGrid;
+use ya_advent_lib::read::read_sectioned_input;
+use ya_advent_lib::infinite_grid::InfiniteGrid;
 
 #[derive(Clone)]
 struct Coord {
@@ -115,7 +115,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::sectioned_test_input;
+    use ya_advent_lib::read::sectioned_test_input;
     use super::*;
 
     #[test]

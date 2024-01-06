@@ -2,9 +2,9 @@
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
-use advent_lib::read::read_input;
-use advent_lib::infinite_grid::InfiniteGrid;
-use advent_lib::range::BidirRangeInclusive;
+use ya_advent_lib::read::read_input;
+use ya_advent_lib::infinite_grid::InfiniteGrid;
+use ya_advent_lib::range::BidirRangeInclusive;
 
 struct Line {
     x1: i64,
@@ -57,7 +57,7 @@ fn doit(input: &[Line], with_diagonals: bool) -> usize {
                 }
             } else {
                 BidirRangeInclusive::new(l.x1, l.x2).into_iter()
-                    .zip(BidirRangeInclusive::new(l.y1, l.y2).into_iter())
+                    .zip(BidirRangeInclusive::new(l.y1, l.y2))
                     .for_each(|(x, y)| {
                         let v = grid.get(x, y);
                         grid.set(x, y, v+1);
@@ -83,7 +83,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

@@ -1,6 +1,6 @@
 use std::vec::Vec;
-extern crate advent_lib;
-use advent_lib::read::read_input;
+extern crate ya_advent_lib;
+use ya_advent_lib::read::read_input;
 
 fn count_ones(list: &[String]) -> Vec<usize> {
     let nbits = list[0].len();
@@ -73,7 +73,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use advent_lib::read::test_input;
+    use ya_advent_lib::read::test_input;
     use super::*;
 
     #[test]

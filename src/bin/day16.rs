@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::vec::Vec;
 use lazy_static::lazy_static;
-use advent_lib::read::read_input;
+use ya_advent_lib::read::read_input;
 
 lazy_static! {
     static ref HEX2BIN: HashMap<char, &'static str> = [
