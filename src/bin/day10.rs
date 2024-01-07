@@ -67,8 +67,7 @@ fn part1(input: &[String]) -> usize {
     input
         .iter()
         .map(|s| analyze_line(s))
-        .filter(|opt| opt.corrupt().is_some())
-        .map(|opt| score_corrupt(opt.corrupt().unwrap()))
+        .filter_map(|opt| opt.corrupt().map(|v| score_corrupt(v)))
         .sum()
 }
 
@@ -76,8 +75,7 @@ fn part2(input: &[String]) -> usize {
     let mut scores: Vec<usize> = input
         .iter()
         .map(|s| analyze_line(s))
-        .filter(|opt| opt.missing().is_some())
-        .map(|opt| score_missing(opt.missing().unwrap()))
+        .filter_map(|opt| opt.missing().map(|v| score_missing(v)))
         .collect();
     scores.sort();
     scores[scores.len() / 2]

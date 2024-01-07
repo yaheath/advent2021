@@ -17,9 +17,7 @@ impl FromStr for Input {
         if s.is_empty() {
             Ok(Input::Blank)
         } else if s.contains(" -> ") {
-            let mut itr = s.split(" -> ");
-            let one = itr.next().unwrap();
-            let two = itr.next().unwrap();
+            let (one, two) = s.split_once(" -> ").unwrap();
             let mut cc = one.chars();
             Ok(Input::Rule(
                 (cc.next().unwrap(), cc.next().unwrap()),

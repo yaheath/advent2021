@@ -2,37 +2,14 @@
 use std::str::FromStr;
 use std::vec::Vec;
 use regex::Regex;
+use ya_advent_lib::coords::Coord2D;
 use ya_advent_lib::read::read_sectioned_input;
 use ya_advent_lib::infinite_grid::InfiniteGrid;
-
-#[derive(Clone)]
-struct Coord {
-    x: i64,
-    y: i64,
-}
 
 #[derive(Copy, Clone)]
 enum Fold {
     X(i64),
     Y(i64),
-}
-
-impl FromStr for Coord {
-    type Err = ();
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        lazy_static! {
-            static ref RE: Regex = Regex::new(r"(\d+),(\d+)").unwrap();
-        }
-        if let Some(caps) = RE.captures(s) {
-            Ok(Coord{
-                x: caps.get(1).unwrap().as_str().parse::<i64>().unwrap(),
-                y: caps.get(2).unwrap().as_str().parse::<i64>().unwrap(),
-            })
-        }
-        else {
-            Err(())
-        }
-    }
 }
 
 impl FromStr for Fold {
@@ -55,7 +32,7 @@ impl FromStr for Fold {
     }
 }
 
-type Input = (Vec<Coord>, Vec<Fold>);
+type Input = (Vec<Coord2D>, Vec<Fold>);
 
 fn setup(input: &Input) -> (InfiniteGrid<bool>, Vec<Fold>) {
     let mut grid = InfiniteGrid::new(false);

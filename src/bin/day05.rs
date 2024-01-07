@@ -1,41 +1,29 @@
-#[macro_use] extern crate lazy_static;
 use std::str::FromStr;
 use std::vec::Vec;
-use regex::Regex;
-use ya_advent_lib::read::read_input;
+use ya_advent_lib::coords::Coord2D;
 use ya_advent_lib::infinite_grid::InfiniteGrid;
 use ya_advent_lib::range::BidirRangeInclusive;
+use ya_advent_lib::read::read_input;
 
 struct Line {
-    x1: i64,
-    y1: i64,
-    x2: i64,
-    y2: i64,
+    a: Coord2D,
+    b: Coord2D
 }
 
 impl FromStr for Line {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        lazy_static! {
-            static ref RE: Regex = Regex::new(r"(\d+),(\d+) .. (\d+),(\d+)").unwrap();
-        }
-        if let Some(caps) = RE.captures(s) {
-            Ok(Line {
-                x1: caps.get(1).unwrap().as_str().parse::<i64>().unwrap(),
-                y1: caps.get(2).unwrap().as_str().parse::<i64>().unwrap(),
-                x2: caps.get(3).unwrap().as_str().parse::<i64>().unwrap(),
-                y2: caps.get(4).unwrap().as_str().parse::<i64>().unwrap(),
-            })
-        }
-        else {
-            Err(())
-        }
+        let (a, b) = s.split_once(" -> ").unwrap();
+        Ok(Line {
+            a: a.parse::<Coord2D>().unwrap(),
+            b: b.parse::<Coord2D>().unwrap(),
+        })
     }
 }
 
 impl Line {
     fn is_aa(&self) -> bool {
-        self.y1 == self.y2 || self.x1 == self.x2
+        self.a.y == self.b.y || self.a.x == self.b.x
     }
 }
 
@@ -45,19 +33,19 @@ fn doit(input: &[Line], with_diagonals: bool) -> usize {
         .iter()
         .filter(|l| with_diagonals || l.is_aa())
         .for_each(|l| {
-            if l.x1 == l.x2 {
-                for y in l.y1.min(l.y2)..=l.y1.max(l.y2) {
-                    let v = grid.get(l.x1, y);
-                    grid.set(l.x1, y, v+1);
+            if l.a.x == l.b.x {
+                for y in l.a.y.min(l.b.y)..=l.a.y.max(l.b.y) {
+                    let v = grid.get(l.a.x, y);
+                    grid.set(l.a.x, y, v+1);
                 }
-            } else if l.y1 == l.y2 {
-                for x in l.x1.min(l.x2)..=l.x1.max(l.x2) {
-                    let v = grid.get(x, l.y1);
-                    grid.set(x, l.y1, v+1);
+            } else if l.a.y == l.b.y {
+                for x in l.a.x.min(l.b.x)..=l.a.x.max(l.b.x) {
+                    let v = grid.get(x, l.a.y);
+                    grid.set(x, l.a.y, v+1);
                 }
             } else {
-                BidirRangeInclusive::new(l.x1, l.x2).into_iter()
-                    .zip(BidirRangeInclusive::new(l.y1, l.y2))
+                BidirRangeInclusive::new(l.a.x, l.b.x).into_iter()
+                    .zip(BidirRangeInclusive::new(l.a.y, l.b.y))
                     .for_each(|(x, y)| {
                         let v = grid.get(x, y);
                         grid.set(x, y, v+1);

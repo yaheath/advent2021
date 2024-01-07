@@ -141,16 +141,14 @@ mod tests {
 
     #[test]
     fn day16_test() {
-        let bstrm:String = bitstream(&String::from("ABC0123")).collect();
+        let bstrm:String = bitstream("ABC0123").collect();
         assert_eq!(bstrm, "1010101111000000000100100011");
 
-        let hex = &String::from("D2FE28");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("D2FE28");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(pkt, Packet{version: 6, type_id: 4, payload: Payload::Literal(2021)});
 
-        let hex = &String::from("38006F45291200");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("38006F45291200");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(pkt, Packet {
             version: 1,
@@ -163,8 +161,7 @@ mod tests {
             ),
         });
 
-        let hex = &String::from("EE00D40C823060");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("EE00D40C823060");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(pkt, Packet {
             version: 7,
@@ -178,63 +175,51 @@ mod tests {
             ),
         });
 
-        let hex = &String::from("8A004A801A8002F478");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("8A004A801A8002F478");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(sum_versions(&pkt), 16);
 
-        let hex = &String::from("620080001611562C8802118E34");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("620080001611562C8802118E34");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(sum_versions(&pkt), 12);
 
-        let hex = &String::from("C0015000016115A2E0802F182340");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("C0015000016115A2E0802F182340");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(sum_versions(&pkt), 23);
 
-        let hex = &String::from("A0016C880162017C3686B18A3D4780");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("A0016C880162017C3686B18A3D4780");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(sum_versions(&pkt), 31);
 
-        let hex = &String::from("C200B40A82");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("C200B40A82");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 3);
 
-        let hex = &String::from("04005AC33890");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("04005AC33890");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 54);
 
-        let hex = &String::from("880086C3E88112");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("880086C3E88112");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 7);
 
-        let hex = &String::from("CE00C43D881120");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("CE00C43D881120");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 9);
 
-        let hex = &String::from("D8005AC2A8F0");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("D8005AC2A8F0");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 1);
 
-        let hex = &String::from("F600BC2D8F");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("F600BC2D8F");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 0);
 
-        let hex = &String::from("9C005AC2F8F0");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("9C005AC2F8F0");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 0);
 
-        let hex = &String::from("9C0141080250320F1802104A08");
-        let mut bstrm = bitstream(&hex);
+        let mut bstrm = bitstream("9C0141080250320F1802104A08");
         let pkt:Packet = parse_packet(&mut bstrm);
         assert_eq!(value_of(&pkt), 1);
     }

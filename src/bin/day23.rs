@@ -2,8 +2,9 @@ use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::iter;
 use std::vec::Vec;
-use ya_advent_lib::read::read_input;
+use ya_advent_lib::coords::Coord2D;
 use ya_advent_lib::grid::Grid;
+use ya_advent_lib::read::read_input;
 
 #[derive(Clone, Copy)]
 enum Cell {
@@ -78,8 +79,8 @@ impl Pod {
 struct Map {
     cells: Grid<Cell>,
     rules: Grid<Rule>,
-    rooms: [Vec<Coord>; 4],
-    halls: Vec<Coord>,
+    rooms: [Vec<Coord2D>; 4],
+    halls: Vec<Coord2D>,
     idx_to_type: Vec<Pod>,
 }
 
@@ -89,7 +90,7 @@ fn make_map(input: &[String]) -> Map {
         cells.x_bounds().start, cells.y_bounds().start,
         cells.x_bounds().end - 1, cells.y_bounds().end - 1,
         Rule::Wall);
-    let mut halls: Vec<Coord> = Vec::new();
+    let mut halls: Vec<Coord2D> = Vec::new();
 
     let mut room_y = -1i64;
     let mut room_y_top = -1i64;
@@ -115,7 +116,7 @@ fn make_map(input: &[String]) -> Map {
                         if y == room_y_top - 1 && matches!(cells.get(x, y+1), Cell::Pod(_)) {
                             Rule::Entry
                         } else {
-                            halls.push((x, y));
+                            halls.push(Coord2D::new(x, y));
                             Rule::Hall
                         }
                     },
@@ -124,10 +125,10 @@ fn make_map(input: &[String]) -> Map {
         }
     }
     let rooms = [
-        (room_y_top..=room_y).map(|y| (room_x[0], y)).collect::<Vec<Coord>>(),
-        (room_y_top..=room_y).map(|y| (room_x[1], y)).collect::<Vec<Coord>>(),
-        (room_y_top..=room_y).map(|y| (room_x[2], y)).collect::<Vec<Coord>>(),
-        (room_y_top..=room_y).map(|y| (room_x[3], y)).collect::<Vec<Coord>>(),
+        (room_y_top..=room_y).map(|y| Coord2D::new(room_x[0], y)).collect::<Vec<Coord2D>>(),
+        (room_y_top..=room_y).map(|y| Coord2D::new(room_x[1], y)).collect::<Vec<Coord2D>>(),
+        (room_y_top..=room_y).map(|y| Coord2D::new(room_x[2], y)).collect::<Vec<Coord2D>>(),
+        (room_y_top..=room_y).map(|y| Coord2D::new(room_x[3], y)).collect::<Vec<Coord2D>>(),
     ];
     let ppt = rooms[0].len();
     let idx_to_type: Vec<Pod> = Vec::from_iter(
@@ -144,17 +145,15 @@ fn make_map(input: &[String]) -> Map {
     }
 }
 
-type Coord = (i64, i64);
-
 #[derive(Clone, Eq, PartialEq)]
 struct State {
     cost: usize,
-    pods: Vec<Coord>,
+    pods: Vec<Coord2D>,
 }
 
 impl State {
-    fn pods_as_array(&self) -> [Coord; 16] {
-        let mut out = [(0, 0); 16];
+    fn pods_as_array(&self) -> [Coord2D; 16] {
+        let mut out = [Coord2D::new(0, 0); 16];
         self.pods.iter().enumerate().for_each(|(idx, &c)| {
             out[idx] = c;
         });
@@ -176,22 +175,22 @@ impl PartialOrd for State {
 }
 
 fn get_initial_state(map: &Map) -> State {
-    let mut a_pods: Vec<Coord> = Vec::new();
-    let mut b_pods: Vec<Coord> = Vec::new();
-    let mut c_pods: Vec<Coord> = Vec::new();
-    let mut d_pods: Vec<Coord> = Vec::new();
+    let mut a_pods: Vec<Coord2D> = Vec::new();
+    let mut b_pods: Vec<Coord2D> = Vec::new();
+    let mut c_pods: Vec<Coord2D> = Vec::new();
+    let mut d_pods: Vec<Coord2D> = Vec::new();
     map.cells.for_each(|c, x, y| match c {
         Cell::Pod(Pod::A) => {
-            a_pods.push((x, y));
+            a_pods.push(Coord2D::new(x, y));
         },
         Cell::Pod(Pod::B) => {
-            b_pods.push((x, y));
+            b_pods.push(Coord2D::new(x, y));
         },
         Cell::Pod(Pod::C) => {
-            c_pods.push((x, y));
+            c_pods.push(Coord2D::new(x, y));
         },
         Cell::Pod(Pod::D) => {
-            d_pods.push((x, y));
+            d_pods.push(Coord2D::new(x, y));
         },
         _ => {},
     });
@@ -207,10 +206,10 @@ fn get_initial_state(map: &Map) -> State {
     }
 }
 
-fn is_final(coords: &[Coord], map: &Map) -> bool {
+fn is_final(coords: &[Coord2D], map: &Map) -> bool {
     map.idx_to_type.iter()
         .enumerate()
-        .filter(|(idx, p)| map.rules.get(coords[*idx].0, coords[*idx].1) == Rule::Room(**p))
+        .filter(|(idx, p)| map.rules.get_c(coords[*idx]) == Rule::Room(**p))
         .count()
     == map.idx_to_type.len()
 }
@@ -223,13 +222,13 @@ enum Move {
 
 struct StateExtra {
     cost: usize,
-    pods: Vec<Coord>,
-    positions: HashMap<Coord, usize>,
+    pods: Vec<Coord2D>,
+    positions: HashMap<Coord2D, usize>,
 }
 
 impl StateExtra {
     fn new(state: &State) -> Self {
-        let positions: HashMap<Coord, usize> = HashMap::from_iter(
+        let positions: HashMap<Coord2D, usize> = HashMap::from_iter(
             state.pods.iter()
             .enumerate()
             .map(|(idx,c)| (*c, idx))
@@ -242,9 +241,9 @@ impl StateExtra {
     }
 }
 
-fn path_to(idx: usize, dest: Coord, state: &StateExtra, map: &Map) -> Option<State> {
-    let mut queue:Vec<(Coord,usize)> = Vec::new();
-    let mut traversed:HashSet<Coord> = HashSet::new();
+fn path_to(idx: usize, dest: Coord2D, state: &StateExtra, map: &Map) -> Option<State> {
+    let mut queue:Vec<(Coord2D,usize)> = Vec::new();
+    let mut traversed:HashSet<Coord2D> = HashSet::new();
     queue.push((state.pods[idx], 0));
     traversed.insert(state.pods[idx]);
     while let Some((pos, steps)) = queue.pop() {
@@ -254,13 +253,10 @@ fn path_to(idx: usize, dest: Coord, state: &StateExtra, map: &Map) -> Option<Sta
             let cost = steps * map.idx_to_type[idx].cost() + state.cost;
             return Some(State { cost, pods: newpods });
         }
-        let at_entry = map.rules.get(pos.0, pos.1) == Rule::Entry;
-        for newpos in [
-            (pos.0 - 1, pos.1), (pos.0 + 1, pos.1),
-            (pos.0, pos.1 - 1), (pos.0, pos.1 + 1),
-        ] {
+        let at_entry = map.rules.get_c(pos) == Rule::Entry;
+        for newpos in pos.neighbors4() {
             if state.positions.contains_key(&newpos) { continue; }
-            match map.rules.get(newpos.0, newpos.1) {
+            match map.rules.get_c(newpos) {
                 Rule::Wall => { continue; },
                 Rule::Room(r) => {
                     if r != map.idx_to_type[idx] && at_entry { continue; }
@@ -280,15 +276,16 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
     map.idx_to_type.iter()
         .enumerate()
         .flat_map(move |(idx, p)| {
-            let (x, y) = state.pods[idx];
-            let moveto = match map.rules.get(x, y) {
+            let loc = state.pods[idx];
+            let moveto = match map.rules.get_c(loc) {
                 Rule::Room(rm) => {
                     if rm == *p {
                         // already in dest room. Stay put unless
                         // there is an incorrect Pod here
-                        if map.rules.get(x, y+1) != Rule::Wall &&
-                            state.positions.contains_key(&(x, y+1)) &&
-                            map.idx_to_type[state.positions[&(x, y+1)]] != *p
+                        let below = loc + Coord2D::y();
+                        if map.rules.get_c(below) != Rule::Wall &&
+                            state.positions.contains_key(&below) &&
+                            map.idx_to_type[state.positions[&below]] != *p
                         {
                             Move::ToHall
                         } else {
@@ -301,7 +298,7 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
                 },
                 Rule::Hall => {
                     if state.positions.iter()
-                        .filter(|(c, _)| map.rules.get(c.0, c.1) == Rule::Room(*p))
+                        .filter(|(c, _)| map.rules.get_c(**c) == Rule::Room(*p))
                         .filter(|(_, idx)| map.idx_to_type[**idx] != *p)
                         .count() > 0 {
                         // someone is in the room that doesn't belong
@@ -312,12 +309,13 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
                 },
                 _ => panic!(),
             };
-            let dests: Vec<Coord> = match moveto {
+            let dests: Vec<Coord2D> = match moveto {
                 Move::Stay => vec![],
                 Move::ToRoom => {
-                    let mut v: Vec<Coord> = Vec::new();
+                    let mut v: Vec<Coord2D> = Vec::new();
                     if let Some(loc) = map.rooms[*p as usize]
-                            .iter().rev()
+                            .iter()
+                            .rev()
                             .find(|&pos| !state.positions.contains_key(pos)) {
                         v.push(*loc);
                     }
@@ -333,7 +331,7 @@ fn get_next_moves<'a>(state: &'a StateExtra, map: &'a Map) -> impl Iterator<Item
 
 fn search(map: &Map) -> usize {
     let mut heap: BinaryHeap<State> = BinaryHeap::new();
-    let mut visited: HashMap<[Coord; 16], usize> = HashMap::new();
+    let mut visited: HashMap<[Coord2D; 16], usize> = HashMap::new();
     let initial_state = get_initial_state(map);
     visited.insert(initial_state.pods_as_array(), 0);
     heap.push(initial_state);

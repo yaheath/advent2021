@@ -22,8 +22,8 @@ impl FromStr for TargetArea {
             let y1 = caps.get(3).unwrap().as_str().parse::<i64>().unwrap();
             let y2 = caps.get(4).unwrap().as_str().parse::<i64>().unwrap();
             Ok(TargetArea {
-                x: Range {start: x1.min(x2), end: x1.max(x2) + 1},
-                y: Range {start: y1.min(y2), end: y1.max(y2) + 1},
+                x: x1.min(x2) .. x1.max(x2) + 1,
+                y: y1.min(y2) .. y1.max(y2) + 1,
             })
         }
         else {
@@ -86,12 +86,11 @@ fn find_target(target: &TargetArea) -> (i64, i64, Option<i64>) {
 
 fn find_all_hits(target: &TargetArea) -> (i64, usize) {
     let (cx, cy, max_y) = find_target(target);
-    let mut r = 1;
     let mut needhit = max_y.is_none();
     let mut max_y = max_y.unwrap_or(0);
     let mut n_hits = if needhit { 0 } else { 1 };
     let mut direct_hit = false;
-    loop {
+    for r in 1.. {
         let mut nohits = true;
         ((cx-r)..=(cx+r)).map(|x| (x, cy-r))
             .chain(
@@ -114,7 +113,6 @@ fn find_all_hits(target: &TargetArea) -> (i64, usize) {
         if nohits && !needhit && direct_hit {
             break;
         }
-        r += 1;
     }
     (max_y, n_hits)
 }

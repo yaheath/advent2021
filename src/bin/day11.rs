@@ -1,4 +1,5 @@
 use std::vec::Vec;
+use ya_advent_lib::coords::Coord2D;
 use ya_advent_lib::grid::Grid;
 use ya_advent_lib::read::read_input;
 
@@ -21,22 +22,17 @@ fn simstep(grid: &mut Grid<u8>) -> usize {
                 if grid.get(x, y) > 9 {
                     grid.set(x, y, 0);
                     flashes += 1;
-                    let mut incr = |nx, ny| {
-                        if nx >= xb.start && nx < xb.end && ny >= yb.start && ny < yb.end {
-                            let v = grid.get(nx, ny);
-                            if v != 0 {
-                                grid.set(nx, ny, v + 1);
+                    Coord2D::new(x, y)
+                        .neighbors8()
+                        .into_iter()
+                        .for_each(|n| {
+                            if n.x >= xb.start && n.x < xb.end && n.y >= yb.start && n.y < yb.end {
+                                let v = grid.get(n.x, n.y);
+                                if v != 0 {
+                                    grid.set(n.x, n.y, v + 1);
+                                }
                             }
-                        }
-                    };
-                    incr(x + 1, y);
-                    incr(x + 1, y + 1);
-                    incr(x + 1, y - 1);
-                    incr(x - 1, y);
-                    incr(x - 1, y + 1);
-                    incr(x - 1, y - 1);
-                    incr(x, y + 1);
-                    incr(x, y - 1);
+                        });
                 }
             }
         }

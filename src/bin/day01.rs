@@ -13,7 +13,7 @@ fn part2(input: &[i32]) -> usize {
     input
         .windows(3)
         .map(|slice| slice.iter().sum::<i32>())
-        .tuple_windows::<(_,_)>()
+        .tuple_windows()
         .filter(|(a,b)| b > a)
         .count()
 }
