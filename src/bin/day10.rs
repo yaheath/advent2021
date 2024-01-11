@@ -67,7 +67,7 @@ fn part1(input: &[String]) -> usize {
     input
         .iter()
         .map(|s| analyze_line(s))
-        .filter_map(|opt| opt.corrupt().map(|v| score_corrupt(v)))
+        .filter_map(|opt| opt.corrupt().map(score_corrupt))
         .sum()
 }
 

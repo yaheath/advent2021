@@ -38,7 +38,7 @@ struct Transform {
 
 fn rotations(coord:Coord3D) -> Vec<Coord3D> {
     let (x, y, z) = (coord.x, coord.y, coord.z);
-    let n = |a,b,c| Coord3D::new(a,b,c);
+    let n = Coord3D::new;
     vec![
         n(x, y, z),   n(x, z, -y), n(x, -y, -z), n(x, -z, y),
         n(-x, -y, z), n(-x, z, y), n(-x, y, -z), n(-x, -z, -y),
